@@ -6,17 +6,35 @@ import exampleData from '../example-data/exampleData';
 import '../styles/App.scss';
 
 class App extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       filter: 'None',
       bugs: exampleData,
+      visibleBugs: [],
+      submitDialogVisible: false,
     };
     this.filterHandler = this.filterHandler.bind(this);
   }
 
+  componentDidMount(){
+    fetch('http://localhost:3000/bugs')
+    // .then(bugs => console.log(bugs))
+    .then(bugs => bugs.json() )
+    .then(bugs => this.setState({bugs}))
+    .catch(err => {throw err})
+    .then(result => this.filterHandler("None"))
+  }
+
   filterHandler(filter) {
-    this.setState({ filter });
+    this.setState({ filter })
+    
+    let filteredBugs = this.state.filter !== "None"? this.state.bugs.filter( bug => bug.threatLevel === this.state.filter): this.state.bugs;
+    console.log(this.state.filter);
+    console.log(filteredBugs)
+    
+    this.setState({visibleBugs:filteredBugs})
+    
   }
 
   render() {
@@ -25,7 +43,7 @@ class App extends React.Component {
         <Nav
           filterHandler={this.filterHandler}
         />
-        {this.state.bugs.map((bug) => (
+        {this.state.visibleBugs.map((bug) => (
           <BugTile
             bugName={bug.bugName}
             bugDescription={bug.bugDescription}

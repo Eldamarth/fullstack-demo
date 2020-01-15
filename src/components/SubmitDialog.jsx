@@ -10,7 +10,7 @@ class SubmitDialog extends Component {
 
     render() {
         return (<div>
-
+            
         </div>)
     }
 }

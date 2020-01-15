@@ -3,13 +3,17 @@ const app = express();
 const bodyParser = require('body-parser');
 const port = 3000;
 const database = require('./db/queries');
+const cors = require('cors');
 
 app.use(bodyParser.json())
+app.use(cors());
 
 app.get('/bugs', (req,res)=>{
     console.log("bugs requested");
     database.viewAllBugs()
-    .then (result => res.send(result))
+    .then (result => {
+        console.log(result)
+        return res.send(result)})
     .catch (err => {throw err})
 });
 app.post('/bugs', (req, res)=>{

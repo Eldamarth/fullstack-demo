@@ -2,7 +2,7 @@ import React from 'react';
 
 const BugTile = (props) => (
   <tbody>
-    <tr className="bugTile">
+    <tr className="bugTile" >
       <td>{props.bugName}</td>
       <td>{props.bugDescription}</td>
       <td>{props.reportedBy}</td>
