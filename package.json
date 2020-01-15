@@ -17,9 +17,9 @@
       "browser": true,
       "node": true
     },
-    "rules": {   
-      "react/jsx-uses-react": "error",   
-      "react/jsx-uses-vars": "error" 
+    "rules": {
+      "react/jsx-uses-react": "error",
+      "react/jsx-uses-vars": "error"
     }
   },
   "description": "",
@@ -56,6 +56,7 @@
   "dependencies": {
     "express": "^4.17.1",
     "mongoose": "^5.8.5",
+    "mongoose-auto-increment": "^5.0.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
   }
