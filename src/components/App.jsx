@@ -4,6 +4,7 @@ import BugTile from './BugTile.jsx';
 import exampleData from '../example-data/exampleData';
 
 import '../styles/App.scss';
+import SubmitDialog from './SubmitDialog.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -23,23 +24,24 @@ class App extends React.Component {
     .then(bugs => bugs.json() )
     .then(bugs => this.setState({bugs}))
     .catch(err => {throw err})
-    .then(result => this.filterHandler("None"))
+    .then(() => this.filterHandler(this.state.filter))
   }
 
   filterHandler(filter) {
-    this.setState({ filter })
-    
-    let filteredBugs = this.state.filter !== "None"? this.state.bugs.filter( bug => bug.threatLevel === this.state.filter): this.state.bugs;
-    console.log(this.state.filter);
-    console.log(filteredBugs)
-    
-    this.setState({visibleBugs:filteredBugs})
+    this.setState({ filter }, ()=>{
+      let filteredBugs = this.state.filter !== "None"? this.state.bugs.filter( bug => bug.threatLevel === this.state.filter): this.state.bugs;
+      this.setState({visibleBugs:filteredBugs});
+    })
     
   }
-
+  
   render() {
     return (
+      <div>
+      <div id="submitButton"><button  onClick={(e)=>{this.setState({submitDialogVisible:true})}}>SUBMIT NEW BUG</button></div>
+      <SubmitDialog submitDialogVisible={this.state.submitDialogVisible}/>
       <table>
+        
         <Nav
           filterHandler={this.filterHandler}
         />
@@ -55,6 +57,7 @@ class App extends React.Component {
           />
         ))}
       </table>
+      </div>
     );
   }
 }

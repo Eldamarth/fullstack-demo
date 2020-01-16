@@ -12,7 +12,7 @@ app.get('/bugs', (req,res)=>{
     console.log("bugs requested");
     database.viewAllBugs()
     .then (result => {
-        console.log(result)
+
         return res.send(result)})
     .catch (err => {throw err})
 });

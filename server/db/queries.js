@@ -11,16 +11,21 @@ db.once('open', () => {
 
 autoIncrement.initialize(db);
 
+
 const bugSchema = new mongoose.Schema({
-    bugName: mongoose.Types.ObjectId,
+    // bugName: mongoose.Types.ObjectId,
     bugDescription: String,
     reportedBy: String,
     createdDate: {type: Date, default: Date.now},
     assignedTo: String,
     threatLevel: String,
 })
-
 bugSchema.plugin(autoIncrement.plugin, 'Bug');
+
+bugSchema.virtual('bugName').get(function() {
+    return this._id;
+});
+
 const Bug = db.model('Bug', bugSchema, 'bugs');
 
 newBug = (bug) => {
